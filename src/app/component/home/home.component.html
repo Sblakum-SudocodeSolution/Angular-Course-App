@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="row text-center">
+        <h2 class="m-0 my-4 fw-bold text-uppercase">courses</h2>
+    </div>
+    <div class="row">
+        @for(course of courses; track $index) {
+        <div class="col-lg-3 col-md-6">
+            <app-courses [course]="course"></app-courses>
+        </div>
+        }
+    </div>
+</div>

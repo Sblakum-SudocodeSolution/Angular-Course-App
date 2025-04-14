@@ -1,0 +1,26 @@
+.courseForm {
+  input:focus,
+  textarea:focus {
+    box-shadow: none;
+    border-color: blueviolet;
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  button {
+    background-color: blueviolet;
+    color: white;
+    width: 10rem;
+  }
+}
+
+.card {
+  border-color: blueviolet;
+
+  .card-header {
+    background-color: blueviolet;
+    color: white;
+  }
+}
