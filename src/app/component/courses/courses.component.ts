@@ -1,5 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-courses',
@@ -10,10 +9,10 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 })
 export class CoursesComponent {
   @Input() course: any;
+  @Input() isDelete = false;
+  @Output() del = new EventEmitter();
 
-  protected domSanitizer = inject(DomSanitizer);
-
-  public getSanitizeUrl(url: string): SafeUrl {
-    return this.domSanitizer.bypassSecurityTrustUrl(url);
+  deleteCourse() {
+    this.del.emit(this.course);
   }
 }

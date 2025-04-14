@@ -19,8 +19,8 @@ import { CoursesComponent } from '../courses/courses.component';
 export class AdminComponent {
   courseForm!: FormGroup;
   submitted: boolean = false;
-  cover!: string;
   courses: any[] = [];
+  cover!: string | null;
 
   private fb = inject(FormBuilder);
 
@@ -49,7 +49,6 @@ export class AdminComponent {
 
   onFileChange(event: any) {
     const file = event.target.files[0];
-
     if (file) {
       let reader = new FileReader();
       reader.onload = () => {
@@ -67,16 +66,31 @@ export class AdminComponent {
       return;
     } else {
       let formData = {
+        // id: Math.floor(Math.random() * 10 + 1),
         courseName: this.courseForm.controls['courseName']?.value,
         message: this.courseForm.controls['message']?.value,
-        coverImage: this.courseForm.controls['coverImage']?.value,
+        coverImage: this.cover,
       };
 
-      debugger;
       this.courses = [...this.courses, formData];
-      localStorage.setItem('course', JSON.stringify(this.courses));
+      this.setData(this.courses);
       this.courseForm.reset();
+      // this.cover = null;
       this.submitted = false;
     }
+  }
+
+  delteCourse(course: any) {
+    debugger;
+    this.courses = this.courses.filter(
+      (course_item) => course_item.courseName != course.courseName
+    );
+
+    debugger;
+    this.setData(this.courses);
+  }
+
+  setData(data: any) {
+    localStorage.setItem('course', JSON.stringify(data));
   }
 }

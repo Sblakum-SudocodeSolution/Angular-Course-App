@@ -40,7 +40,7 @@
                     }
                 </div>
 
-                <div class="mb-3 d-flex">
+                <!-- <div class="mb-3 d-flex">
                     <input type="checkbox" class="form-check-input" [multiple]="false" name="rememberMe"
                         formControlName="rememberMe" (change)="onFileChange($event)">
                     <span class="ms-2">Remember Me</span>
@@ -48,7 +48,7 @@
                     @if (submitted && courseFormControls['rememberMe'].errors?.['required']) {
                     <span class="text-danger">Required</span>
                     }
-                </div>
+                </div> -->
                 <div class="div" align="center">
                     <button type="submit" class="btn">Add</button>
                 </div>
@@ -58,8 +58,8 @@
 
     <div class="row text-center my-5">
         @for(course of courses; track $index){
-        <div class="col-lg-3 col-md-6 mt-3">
-            <app-courses [course]="course"></app-courses>
+        <div class="col-lg-4 col-md-6 mt-3">
+            <app-courses [course]="course" [isDelete]="true" (del)="delteCourse($event)"></app-courses>
         </div>
         }
     </div>
