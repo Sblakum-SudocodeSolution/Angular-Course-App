@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CoursesComponent } from '../courses/courses.component';
+import { AppService } from '../services/app.service';
 
 @Component({
   selector: 'app-admin',
@@ -21,8 +22,10 @@ export class AdminComponent {
   submitted: boolean = false;
   courses: any[] = [];
   cover!: string | null;
+  selectedRole: string = '';
 
   private fb = inject(FormBuilder);
+  private appService = inject(AppService);
 
   ngOnInit() {
     this.courseForm = this.fb.group({
@@ -33,6 +36,10 @@ export class AdminComponent {
     });
 
     this.getCourse();
+
+    this.appService.behaviorSubjectRole$.subscribe((role: string) => {
+      this.selectedRole = role;
+    });
   }
 
   getCourse() {
@@ -70,7 +77,10 @@ export class AdminComponent {
         courseName: this.courseForm.controls['courseName']?.value,
         message: this.courseForm.controls['message']?.value,
         coverImage: this.cover,
+        rememberMe: this.courseForm.controls['rememberMe']?.value,
       };
+
+      console.log(formData);
 
       this.courses = [...this.courses, formData];
       this.setData(this.courses);
@@ -81,12 +91,10 @@ export class AdminComponent {
   }
 
   delteCourse(course: any) {
-    debugger;
     this.courses = this.courses.filter(
       (course_item) => course_item.courseName != course.courseName
     );
 
-    debugger;
     this.setData(this.courses);
   }
 

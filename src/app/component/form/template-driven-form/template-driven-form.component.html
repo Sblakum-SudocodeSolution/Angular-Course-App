@@ -1,0 +1,185 @@
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <form #userForm="ngForm" (ngSubmit)="handleSubmit(userForm)" novalidate>
+        <div class="mb-3">
+          <label for="name" class="form-label">Name<span>*</span></label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Name"
+            name="name"
+            id="name"
+            [(ngModel)]="user.name"
+            #name="ngModel"
+            required
+            minlength="8"
+          />
+          @if (name.touched && name.invalid) {
+          <div>
+            @if (name.errors!['minlength']) {
+            <span class="error">Minimum 8 character is required</span>
+            }@else {
+            <span class="error">Required</span>
+            }
+          </div>
+          }
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email<span>*</span></label>
+          <input
+            type="email"
+            placeholder="Enter Email"
+            class="form-control"
+            name="email"
+            id="email"
+            [(ngModel)]="user.email"
+            #email="ngModel"
+            required
+            email
+          />
+
+          @if (email.touched && email.invalid) {
+          <div>
+            @if (email.errors!['email']) {
+            <span class="error">enter valid email</span>
+            } @else {
+            <span class="error">Required</span>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label"
+            >Password<span>*</span></label
+          >
+          <input
+            type="password"
+            placeholder="Enter Password"
+            class="form-control"
+            name="password"
+            id="password"
+            [(ngModel)]="user.password"
+            #password="ngModel"
+            required
+            minlength="8"
+            maxlength="12"
+          />
+
+          @if (password.touched && password.invalid) {
+          <div>
+            @if (password.errors!['minlength']) {
+            <span class="error">Minimum 8 character is required</span>
+            } @else if(password.errors!['maxlength']){
+            <span class="error">maximum 12 character is allow</span>
+            }@else {
+            <span class="error">Required</span>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="age" class="form-label">Age<span>*</span></label>
+          <input
+            type="number"
+            placeholder="Enter Age"
+            class="form-control"
+            name="age"
+            id="age"
+            [(ngModel)]="user.age"
+            #age="ngModel"
+            required
+            [min]="18"
+            [max]="65"
+          />
+
+          @if (age.touched && age.invalid) {
+          <div>
+            @if (age.errors!['min']) {
+            <span class="error">you are not 18+</span>
+            } @else if(age.errors!['max']){
+            <span class="error">Age limit 65</span>
+            }@else {
+            <span class="error">Required</span>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="gender" class="form-label">Gender<span>*</span></label>
+          <select
+            class="form-control"
+            name="gender"
+            id="gender"
+            [(ngModel)]="user.gender"
+            #gender="ngModel"
+            required
+          >
+            <option value="" disabled>select Gender</option>
+            <option value="Male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+
+          @if (gender.touched && gender.invalid) {
+          <div>
+            @if (age.errors!['required']) {
+            <span class="error">Required</span>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <input
+            type="checkbox"
+            id="terms"
+            name="terms"
+            [(ngModel)]="user.terms"
+            #terms="ngModel"
+            required
+          />
+          &nbsp;
+          <label for="terms" class="form-label"
+            >Please approve tems and conditions<span>*</span></label
+          >
+
+          @if (terms.invalid && terms.touched) {
+          <div>
+            @if (terms.errors!['required']) {
+            <span class="error">required</span>
+            }
+          </div>
+          }
+        </div>
+
+        <div align="center">
+          <!-- <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="userForm.invalid"
+          >
+            Submit
+          </button> -->
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="onReset(userForm)"
+          >
+            Reset
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer">
+      @if (user) {
+      {{ user | json }}
+      }
+    </div>
+  </div>
+</div>

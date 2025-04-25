@@ -1,0 +1,130 @@
+<div class="container">
+  <form [formGroup]="userForm" (submit)="handleSubmit()">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input
+        type="text"
+        placeholder="Enter Name"
+        class="form-control"
+        id="name"
+        formControlName="name"
+      />
+
+      @let name = userForm.get('name'); @if (name?.invalid && name?.touched) {
+      <div>
+        @if (name?.errors!['required']) {
+        <span class="err">required</span>
+        }
+      </div>
+      }
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        placeholder="Enter Email"
+        class="form-control"
+        id="email"
+        formControlName="email"
+      />
+
+      @let email = userForm.get('email'); @if (email?.invalid && email?.touched)
+      {
+      <div>
+        @if (email?.errors!['email']) {
+        <span class="err">Email not valid</span>
+        } @else {
+        <span class="err">required</span>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        placeholder="Enter password"
+        class="form-control"
+        id="password"
+        formControlName="password"
+      />
+
+      @let password = userForm.get('password'); @if (password?.invalid &&
+      password?.touched) {
+      <div>
+        @if (password?.errors!['minlength']) {
+        <span class="err">min 8 length</span>
+        }@else if (password?.errors!['maxlength']) {
+        <span class="err">max 16 length</span>
+        }@else {
+        <span class="err">required</span>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label for="gender" class="form-label">Gender</label>
+      <select class="form-control" id="gender" formControlName="gender">
+        <option value="" disabled>Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+
+      @let gender = userForm.get('gender'); @if (gender?.invalid &&
+      gender?.touched) {
+      <div>
+        @if (gender?.errors!['required']) {
+        <span class="err">required</span>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <label for="age" class="form-label">Age</label>
+      <input
+        type="number"
+        placeholder="Enter Age"
+        class="form-control"
+        id="age"
+        formControlName="age"
+      />
+
+      @let age = userForm.get('age'); @if (age?.invalid && age?.touched) {
+      <div>
+        @if (age?.errors!['min']) {
+        <span class="err">min 18+</span>
+        }@else if (age?.errors!['max']) {
+        <span class="err">max 65</span>
+        }@else {
+        <span class="err">required</span>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="mb-3">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="terms"
+        formControlName="terms"
+      />&nbsp;
+      <label for="terms" class="form-label"
+        >Please approve tems and conditions</label
+      >
+
+      @let terms = userForm.get('terms'); @if (terms?.invalid && terms?.touched)
+      { @if (terms?.errors!['required']) {
+      <span class="err">Required</span>
+      } }
+    </div>
+
+    <div align="center">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>

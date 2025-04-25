@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <form #userForm="ngForm" (ngSubmit)="handleSubmit(userForm)">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Enter Name"
+            id="name"
+            name="name"
+            [(ngModel)]="formInput.name"
+            #name="ngModel"
+            required
+          />
+
+          @if (userForm.submitted && userForm.form.controls['name'].invalid) {
+          <span class="err">Required</span>
+          }
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Enter Email"
+            id="email"
+            name="email"
+            [(ngModel)]="formInput.email"
+            #email="ngModel"
+            required
+          />
+
+          @if (userForm.submitted && email.invalid) {
+          <span class="err">Required</span>
+          }
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

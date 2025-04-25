@@ -1,1 +1,14 @@
-<p>about works!</p>
+<div class="container">
+  <form [formGroup]="roleForm">
+    <select
+      id="country"
+      formControlName="country"
+      (change)="onRoleChange($event)"
+    >
+      @for (item of roles; track $index) {
+      <option value="{{ item }}">{{ item }}</option>
+      }
+    </select>
+  </form>
+  <h1>{{ selectedRole }}</h1>
+</div>

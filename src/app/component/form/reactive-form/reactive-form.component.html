@@ -1,0 +1,191 @@
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      @let form = userForm()!;
+
+      <form [formGroup]="userForm()!" (ngSubmit)="handleSubmit()">
+        <fieldset formGroupName="personalDetails">
+          <legend>Personal Details</legend>
+          <div class="mb-3">
+            <label for="username" class="form-label">UserName</label>
+            <input
+              type="text"
+              placeholder="Enter UserName"
+              class="form-control"
+              id="username"
+              formControlName="username"
+            />
+
+            @let userName = form.get('personalDetails.username'); @if
+            (userName?.invalid && userName?.touched) {
+            <div>
+              @if (userName?.hasError('minlength')) {
+              <span class="err">minimum 6 char required</span>
+              }@else {
+              <span class="err">required</span>
+              }
+            </div>
+            }
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              placeholder="Enter Email"
+              class="form-control"
+              id="email"
+              formControlName="email"
+            />
+            @let email = form.get('personalDetails.email'); @if (email?.invalid
+            && email?.touched) {
+            <div>
+              @if (email?.hasError('email')) {
+              <span class="err">enter valid email</span>
+              }@else {
+              <span class="err">required</span>
+              }
+            </div>
+            }
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              placeholder="Enter Password"
+              class="form-control"
+              id="password"
+              formControlName="password"
+            />
+
+            @let password = form.get('personalDetails.password'); @if
+            (password?.invalid && password?.touched) {
+            <div>
+              @if (password?.hasError('minlength')) {
+              <span class="err">enter min 8 char</span>
+              } @else if (password?.hasError('maxlength')) {
+              <span class="err">max 16 char allow</span>
+              } @else {
+              <span class="err">required</span>
+              }
+            </div>
+            }
+          </div>
+        </fieldset>
+
+        <fieldset formGroupName="address">
+          <legend>Address</legend>
+
+          <div class="mb-3">
+            <label for="city" class="form-label">City</label>
+            <input
+              type="text"
+              placeholder="Enter City"
+              class="form-control"
+              id="city"
+              formControlName="city"
+            />
+
+            @let city = form.get('address.city'); @if (city?.invalid &&
+            city?.touched) {
+            <div>
+              @if (city?.hasError('required')) {
+              <span class="err">required</span>
+              }
+            </div>
+            }
+          </div>
+
+          <div class="mb-3">
+            <label for="zipcode" class="form-label">Zipcode</label>
+            <input
+              type="number"
+              placeholder="Enter Zipcode"
+              class="form-control"
+              id="zipcode"
+              formControlName="zipcode"
+            />
+
+            @let zipcode = form.get('address.zipcode'); @if (zipcode?.invalid &&
+            zipcode?.touched) {
+            <div>
+              @if (zipcode?.hasError('required')) {
+              <span class="err">required</span>
+              }
+            </div>
+            }
+          </div>
+        </fieldset>
+
+        <fieldset formArrayName="phoneNumber">
+          <legend>Phone Number</legend>
+
+          @for (phone of phoneNumber.controls; track $index) {
+          <div [formGroupName]="$index" class="row d-flex">
+            <div class="col-md-5">
+              <input
+                type="number"
+                placeholder="Enter PhoneNumber"
+                class="form-control"
+                formControlName="number"
+              />
+            </div>
+            <div class="col-md-3">
+              <select formControlName="type" class="form-select">
+                <option value="home">Home</option>
+                <option value="office">Office</option>
+                <option value="work">Work</option>
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <button
+                class="btn btn-danger"
+                (click)="removePhoneNumber($index)"
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+
+          @let phoneNumber = phone.get('number'); @if (phoneNumber?.invalid &&
+          phoneNumber?.touched) {
+          <div>
+            @if (phoneNumber?.hasError('required')) {
+            <span class="err">Required</span>
+            }
+          </div>
+          } }
+
+          <button class="btn btn-success" (click)="addPhoneNumber()">
+            Add phoneNumber
+          </button>
+        </fieldset>
+
+        <div class="mb-3 form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            id="terms"
+            formControlName="terms"
+          />
+          <label for="terms">Check me out</label>
+
+          @let terms = form.get('terms'); @if (terms?.invalid && terms?.touched)
+          {
+          <div>
+            @if (terms?.hasError('required')) {
+            <span class="err">Required</span>
+            }
+          </div>
+          }
+        </div>
+
+        <div align="center">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+
+      {{ form.value | json }}
+    </div>
+  </div>
+</div>
